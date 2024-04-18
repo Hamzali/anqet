@@ -2,7 +2,7 @@ import ThemedText from "@/components/ThemedText";
 import { useColorScheme } from "react-native";
 import { Colors, TextField, TextFieldProps, View } from "react-native-ui-lib";
 
-function AuthTextField(props: TextFieldProps & { helperText?: string }) {
+function FormTextField(props: TextFieldProps & { helperText?: string }) {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const { helperText, ...rest } = props;
@@ -10,6 +10,7 @@ function AuthTextField(props: TextFieldProps & { helperText?: string }) {
     <View gap-4>
       <TextField
         text70BO
+        grey10
         labelStyle={{
           color: isDark ? Colors.white : Colors.black,
           fontSize: 18,
@@ -29,4 +30,4 @@ function AuthTextField(props: TextFieldProps & { helperText?: string }) {
   );
 }
 
-export default AuthTextField;
+export default FormTextField;

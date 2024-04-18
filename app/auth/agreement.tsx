@@ -2,32 +2,8 @@ import ThemedText from "@/components/ThemedText";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Colors, Switch, View } from "react-native-ui-lib";
-
-type AgreementSwitchProps = {
-  value: boolean;
-  agreementText: string;
-  onValueChange: (value: boolean) => void;
-};
-function AgreementSwitch(props: AgreementSwitchProps) {
-  return (
-    <View row centerV gap-16>
-      <Switch
-        bg-primary
-        onColor={Colors.primary}
-        value={props.value}
-        onValueChange={props.onValueChange}
-      />
-      <ThemedText
-        flex
-        style={{ flexWrap: "wrap" }}
-        textBreakStrategy="highQuality"
-      >
-        {props.agreementText}
-      </ThemedText>
-    </View>
-  );
-}
+import { Button, Colors, View } from "react-native-ui-lib";
+import AgreementSwitch from "./_components/AgreementSwitch";
 
 function Agreement() {
   const { t } = useTranslation();

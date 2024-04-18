@@ -5,7 +5,9 @@
     "message": "Hello World!",
     "agreementsTitle": "About Privacy Policy",
     "agreementsDescription": "Please read and agree to the following terms and conditions.",
+    "termsTitle": "Terms and Conditions",
     "termsDescription": "*Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and? Kabul Ediyorum",
+    "privacyTitle": "Privacy Policy",
     "privacyDescription": "*Lorem Ipsum is simply dummy text of the printing and typesetting industry. Kabul ediyorum",
     "marketingDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
     "welcome": "Welcome",
@@ -22,6 +24,16 @@
     "birthday": "Birthday",
     "hasAccount": "Already have an account?",
     "continue": "Continue",
-    "back": "Back"
+    "back": "Back",
+    "signout": "Sign Out",
+    "save": "Save",
+    "aboutUs": "About Us",
+    "profile": "Profile",
+    "startSurvey": "Start Survey",
+    "list": "List",
+    "reportScore": "Score",
+    "reportTotal": "Total",
+    "reportToday": "Today",
+    "completedSurveys": "Completed Surveys"
   }
 }

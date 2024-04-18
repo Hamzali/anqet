@@ -30,22 +30,24 @@ Colors.loadColors({
 });
 Colors.loadSchemes({
   light: {
-    screenBG: "transparent",
+    screenBG: Colors.rgba(Colors.white, 0.5) ?? "transparent",
+    authBG: Colors.rgba(Colors.white, 0.8) ?? "transparent",
     textColor: Colors.grey10,
-    moonOrSun: Colors.yellow30,
-    mountainForeground: Colors.green30,
-    mountainBackground: Colors.green50,
-    $backgroundSuccess: Colors.green40,
-    $backgroundSuccessLight: Colors.green70,
+    $backgroundPrimaryHeavy: Colors.getColorTint(Colors.primary, 1),
+    $backgroundPrimaryMedium: Colors.getColorTint(Colors.primary, 10),
+    $backgroundPrimaryLight: Colors.getColorTint(Colors.primary, 30),
+    $textDefaultLight: Colors.white,
+    primary: Colors.primary,
   },
   dark: {
-    screenBG: Colors.grey10,
+    screenBG: Colors.rgba(Colors.black, 0.5) ?? "transparent",
+    authBG: Colors.rgba(Colors.black, 0.8) ?? "transparent",
     textColor: Colors.white,
-    moonOrSun: Colors.grey80,
-    mountainForeground: Colors.violet10,
-    mountainBackground: Colors.violet20,
-    $backgroundSuccess: Colors.green40,
-    $backgroundSuccessLight: Colors.green20,
+    primary: Colors.getColorTint(Colors.primary, 30),
+    $backgroundPrimaryHeavy: Colors.getColorTint(Colors.primary, 30),
+    $backgroundPrimaryMedium: Colors.getColorTint(Colors.primary, 40),
+    $backgroundPrimaryLight: Colors.getColorTint(Colors.primary, 50),
+    $textDefaultLight: Colors.white,
   },
 });
 

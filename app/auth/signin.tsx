@@ -2,7 +2,7 @@ import ThemedText from "@/components/ThemedText";
 import { Link, router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Button, View } from "react-native-ui-lib";
-import AuthTextField from "./_components/AuthTextFiled";
+import FormTextField from "../../components/FormTextField";
 
 function Signin() {
   const { t } = useTranslation();
@@ -12,18 +12,16 @@ function Signin() {
         {t("welcome")}
       </ThemedText>
       <View gap-8>
-        <AuthTextField
+        <FormTextField
           label={t("nickname")}
           helperText={t("nicknameHelperText")}
         />
-        <AuthTextField secureTextEntry label={t("password")} />
+        <FormTextField secureTextEntry label={t("password")} />
       </View>
       <View gap-12>
         <Button
           fullWidth
           label={t("signin")}
-          bg-primary
-          white
           onPress={() => {
             router.replace("/");
           }}
