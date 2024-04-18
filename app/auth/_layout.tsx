@@ -4,12 +4,15 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
+  useColorScheme,
   useWindowDimensions,
 } from "react-native";
 import { Colors, Image, View } from "react-native-ui-lib";
 
 function AuthLayout() {
   const dim = useWindowDimensions();
+  // in order force to re-render when the color scheme changes
+  const _colorScheme = useColorScheme();
 
   return (
     <TouchableWithoutFeedback

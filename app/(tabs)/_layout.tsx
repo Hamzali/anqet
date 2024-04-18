@@ -2,6 +2,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useColorScheme } from "react-native";
 import { Colors } from "react-native-ui-lib";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -14,6 +15,9 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const { t } = useTranslation();
+  // in order force to re-render when the color scheme changes
+  const _colorScheme = useColorScheme();
+
   return (
     <Tabs
       screenOptions={{
