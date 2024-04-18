@@ -11,18 +11,23 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 
-import { Colors, SchemeType } from "react-native-ui-lib";
+import { Assets, Colors, SchemeType } from "react-native-ui-lib";
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from "expo-router";
 
+Assets.loadAssetsGroup("images", {
+  signinBg: require("../assets/images/signin-bg.png"),
+});
 setupI18n();
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
+Colors.loadColors({
+  primary: "#0300A3",
+});
 Colors.loadSchemes({
   light: {
     screenBG: "transparent",
@@ -77,6 +82,7 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
+        <Stack.Screen name="auth" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
