@@ -1,3 +1,4 @@
+import FormDateTimePicker from "@/components/FormDateTimePicker";
 import GenderToggleButton from "@/components/GenderToggleButton";
 import ThemedText from "@/components/ThemedText";
 import { Link, router } from "expo-router";
@@ -23,7 +24,10 @@ function SignUp() {
           helperText={t("nicknameHelperText")}
         />
         <FormTextField secureTextEntry label={t("password")} />
-        <FormTextField label={t("birthday")} />
+        <FormDateTimePicker
+          label={t("birthday")}
+          placeholder={t("dd/mm/yyyy")}
+        />
       </View>
 
       <View gap-12>

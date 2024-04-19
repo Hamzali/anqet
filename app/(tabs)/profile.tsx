@@ -1,3 +1,4 @@
+import FormDateTimePicker from "@/components/FormDateTimePicker";
 import FormTextField from "@/components/FormTextField";
 import GenderToggleButton from "@/components/GenderToggleButton";
 import ThemedText from "@/components/ThemedText";
@@ -43,9 +44,10 @@ export default function TabTwoScreen() {
   const profileData = {
     nickname: "jhondoe",
     email: "jhone@email.com",
-    birthdate: "01/01/2000",
+    birthdate: "2024-01-02",
     gender: "male",
   };
+
   return (
     <TouchableWithoutFeedback
       style={{ flex: 1 }}
@@ -83,9 +85,10 @@ export default function TabTwoScreen() {
           <View gap-8>
             <FormTextField value={profileData.nickname} label={t("nickname")} />
             <FormTextField value={profileData.email} label={t("email")} />
-            <FormTextField
-              value={profileData.birthdate}
+            <FormDateTimePicker
               label={t("birthday")}
+              placeholder={t("dd/mm/yyyy")}
+              value={new Date(profileData.birthdate)}
             />
           </View>
 
