@@ -1,3 +1,4 @@
+import { supabase } from "@/supabase";
 import { setupI18n } from "@/translations";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
@@ -5,10 +6,15 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 
 import { Assets, Colors, SchemeType } from "react-native-ui-lib";
@@ -51,11 +57,44 @@ Colors.loadSchemes({
   },
 });
 
+const queryClient = new QueryClient();
+
 export default function RootLayout() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppLoader />
+    </QueryClientProvider>
+  );
+}
+
+function AppLoader() {
+  const colorScheme = useColorScheme();
+  useEffect(() => {
+    Colors.setScheme(colorScheme as SchemeType);
+  }, [colorScheme]);
+
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
+
+  const [initialRoute, setInitialRoute] = useState("");
+  const sessionQuery = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => {
+      await supabase.auth.initialize();
+      return supabase.auth.getSession().then((res) => {
+        if (res.error) {
+          throw res.error;
+        }
+        return res.data.session;
+      });
+    },
+  });
+
+  const isUserLoaded = sessionQuery.isSuccess;
+  const session = sessionQuery.data;
+  const isAnonym = session?.user?.is_anonymous ?? true;
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -63,30 +102,39 @@ export default function RootLayout() {
   }, [error]);
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    if (loaded && isUserLoaded) {
+      setInitialRoute(isAnonym ? "auth" : "(tabs)");
     }
-  }, [loaded]);
+  }, [loaded, isUserLoaded, isAnonym]);
 
-  if (!loaded) {
+  if (initialRoute === "") {
     return null;
   }
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-  useEffect(() => {
-    Colors.setScheme(colorScheme as SchemeType);
-  }, [colorScheme]);
-
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="auth" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <RootLayoutNav initialRoute={initialRoute} />
     </ThemeProvider>
+  );
+}
+
+function RootLayoutNav(props: { initialRoute: string }) {
+  useEffect(() => {
+    if (props.initialRoute === "auth") {
+      router.replace("/auth/signin");
+    } else {
+      router.replace("/(tabs)");
+    }
+
+    if (props.initialRoute !== "") {
+      SplashScreen.hideAsync();
+    }
+  }, [props.initialRoute]);
+
+  return (
+    <Stack>
+      <Stack.Screen name="auth" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
 }
