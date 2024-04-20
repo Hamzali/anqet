@@ -6,6 +6,11 @@ Projeyi kısıtlı zaman içinde olabildiğince tamamlayabilmek için React Nati
 
 Proje genel repo yönetim mantığı "locality of behaviour" felsefi üzerine kurulmuştur. Uygulama genelinde state async ve sync olarak iki temel yapıya bölünmüştür. Async state management server ve IO gerektiren dış etkenlere bağlı state olarak react-query ile yönetilmiştir. Sync state ise local ve global olarak karmaşıklığına ve erişimine göre useState ve context api kullanılarak yönetilmiştir.
 
+Anket soru tipleri bir JSON şeması olarak veritabanında saklanır ve her tip JSON soru konfiginin karşılığı renderlama yapılır böylece hem sistem soru konfigleri genişleyebilir hem de birden fazla anket tipi sadece konfigürasyon değiştirerek oluşturulabilir.
+
+
+![schema](schema.png)
+
 Kullanınlan teknolojiler;
 
 - expo: temel geliştirme ortamı ve bazı native eklentiler
