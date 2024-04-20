@@ -6,9 +6,9 @@ import ThemedText from "@/components/ThemedText";
 import ThemedView from "@/components/ThemedView";
 import useFormValidity from "@/hooks/useFormValidity";
 import { useStateWithInit } from "@/hooks/useStateWithInit";
-import { supabase } from "@/supabase";
+import { supabase, useCurrentUserQuery } from "@/supabase";
 import { FontAwesome } from "@expo/vector-icons";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Keyboard, TouchableWithoutFeedback } from "react-native";
@@ -47,21 +47,7 @@ export default function TabTwoScreen() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
-  const profileQuery = useQuery({
-    queryKey: ["profile"],
-    queryFn: async () => {
-      const response = await supabase.auth.getUser();
-      if (response.error) {
-        throw response.error;
-      }
-
-      if (!response.data.user) {
-        throw new Error("User not found");
-      }
-
-      return response.data.user;
-    },
-  });
+  const profileQuery = useCurrentUserQuery();
 
   const profileData = profileQuery.data?.user_metadata ?? {};
 

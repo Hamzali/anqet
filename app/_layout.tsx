@@ -26,6 +26,7 @@ export {
 
 Assets.loadAssetsGroup("images", {
   signinBg: require("../assets/images/signin-bg.png"),
+  surveyCompleted: require("../assets/images/survey-completed.png"),
 });
 setupI18n();
 
@@ -135,6 +136,7 @@ function RootLayoutNav(props: { initialRoute: string }) {
     <Stack>
       <Stack.Screen name="auth" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="survey" options={{ headerBackTitle: "home", headerTitle: "" }} />
     </Stack>
   );
 }

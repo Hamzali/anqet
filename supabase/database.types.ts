@@ -9,7 +9,28 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      survey_template: {
+      survey_answers: {
+        Row: {
+          created_at: string
+          question_index: number
+          survey_id: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          question_index: number
+          survey_id: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          question_index?: number
+          survey_id?: string
+          value?: string
+        }
+        Relationships: []
+      }
+      survey_templates: {
         Row: {
           config: Json
           created_at: string
@@ -27,6 +48,30 @@ export type Database = {
           created_at?: string
           id?: string
           name?: string
+        }
+        Relationships: []
+      }
+      surveys: {
+        Row: {
+          created_at: string
+          id: string
+          status: string
+          survey_template_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          status?: string
+          survey_template_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          status?: string
+          survey_template_id?: string
+          user_id?: string
         }
         Relationships: []
       }

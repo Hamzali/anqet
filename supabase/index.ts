@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
+import { useQuery } from "@tanstack/react-query";
 import { AppState } from "react-native";
 import { Database } from "./database.types";
 
@@ -29,3 +30,23 @@ AppState.addEventListener("change", (state) => {
     supabase.auth.stopAutoRefresh();
   }
 });
+
+export function useCurrentUserQuery() {
+  const query = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: async () => {
+      const response = await supabase.auth.getUser();
+      if (response.error) {
+        throw response.error;
+      }
+
+      if (!response.data.user) {
+        throw new Error("User not found");
+      }
+
+      return response.data.user;
+    },
+  });
+
+  return query;
+}

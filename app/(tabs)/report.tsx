@@ -1,6 +1,9 @@
+import Alert from "@/components/Alert";
 import ThemedText from "@/components/ThemedText";
 import ThemedView from "@/components/ThemedView";
+import { supabase } from "@/supabase";
 import { FontAwesome } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { FlatList } from "react-native";
@@ -27,34 +30,58 @@ function Divider() {
 
 function Report() {
   const { t } = useTranslation();
+
+  const reportQuery = useQuery({
+    queryKey: ["report"],
+    queryFn: async () => {
+      const [surveysResponse, templateResponse] = await Promise.all([
+        supabase
+          .from("surveys")
+          .select()
+          .eq("status", "COMPLETED")
+          .throwOnError(),
+        supabase.from("survey_templates").select().throwOnError(),
+      ]);
+      const surveys = surveysResponse.data ?? [];
+      const templates = templateResponse.data ?? [];
+
+      return surveys.map((s) => ({
+        ...s,
+        template_name: templates.find((t) => t.id === s.survey_template_id)
+          ?.name,
+      }));
+    },
+  });
+  if (reportQuery.isLoading) {
+    return (
+      <ThemedView flex center>
+        <ThemedText>{t("loading")}</ThemedText>
+      </ThemedView>
+    );
+  }
+  if (reportQuery.isError) {
+    return (
+      <ThemedView flex center>
+        <Alert message={t("reportFailed")} level="error" />
+      </ThemedView>
+    );
+  }
+
+  const surveyReport = reportQuery.data;
+  if (!surveyReport) {
+    return (
+      <ThemedView flex center>
+        <Alert message={t("reportNotFound")} level="error" />
+      </ThemedView>
+    );
+  }
+
   const stats = {
-    total: 10,
+    total: surveyReport.length,
     score: 5,
     today: 5,
   };
 
-  const completedSurveys = [
-    {
-      id: "1",
-      name: "Survey 1",
-      timestamp: "2021-09-01T10:33:00.000Z",
-    },
-    {
-      id: "2",
-      name: "Survey 2",
-      timestamp: "2021-09-01T10:33:00.000Z",
-    },
-    {
-      id: "3",
-      name: "Survey 3",
-      timestamp: "2021-09-01T10:33:00.000Z",
-    },
-    {
-      id: "4",
-      name: "Survey 4",
-      timestamp: "2021-09-01T10:33:00.000Z",
-    },
-  ];
   return (
     <ThemedView flex useSafeArea>
       <View gap-16 marginV-80>
@@ -77,13 +104,17 @@ function Report() {
       </View>
       <FlatList
         style={{ flex: 1, paddingHorizontal: 36 }}
-        data={completedSurveys}
+        refreshing={reportQuery.isFetching}
+        onRefresh={() => {
+          reportQuery.refetch();
+        }}
+        data={surveyReport}
         renderItem={(props) => {
-          const date = format(props.item.timestamp, "P");
-          const time = format(props.item.timestamp, "k:mm");
+          const date = format(props.item.created_at, "P");
+          const time = format(props.item.created_at, "k:mm");
           return (
             <TouchableOpacity paddingH-16 paddingV-12 bg-grey60 marginB-8 br10>
-              <ThemedText primary>{props.item.name}</ThemedText>
+              <ThemedText primary>{props.item.template_name}</ThemedText>
               <View row gap-8>
                 <View row gap-4 center>
                   <FontAwesome
