@@ -1,13 +1,10 @@
 {
   "translation": {
-    "title": "Hello World",
-    "description": "This is a simple Hello World example.",
-    "message": "Hello World!",
     "agreementsTitle": "About Privacy Policy",
     "agreementsDescription": "Please read and agree to the following terms and conditions.",
     "termsTitle": "Terms and Conditions",
-    "termsDescription": "*Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and? Kabul Ediyorum",
     "privacyTitle": "Privacy Policy",
+    "termsDescription": "*Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and? Kabul Ediyorum",
     "privacyDescription": "*Lorem Ipsum is simply dummy text of the printing and typesetting industry. Kabul ediyorum",
     "marketingDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
     "welcome": "Welcome",
