@@ -34,10 +34,16 @@ function Report() {
   const reportQuery = useQuery({
     queryKey: ["report"],
     queryFn: async () => {
+      const userResponse = await supabase.auth.getUser();
+      if (userResponse.error) {
+        throw userResponse.error;
+      }
+      
       const [surveysResponse, templateResponse] = await Promise.all([
         supabase
           .from("surveys")
           .select()
+          .eq("user_id", userResponse.data.user.id ?? "")
           .eq("status", "COMPLETED")
           .throwOnError(),
         supabase.from("survey_templates").select().throwOnError(),
