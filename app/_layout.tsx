@@ -135,8 +135,17 @@ function RootLayoutNav(props: { initialRoute: string }) {
   return (
     <Stack>
       <Stack.Screen name="auth" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="survey" options={{ headerBackTitle: "home", headerTitle: "" }} />
+      <Stack.Screen
+        name="(tabs)"
+        options={{ headerShown: false, statusBarTranslucent: false }}
+      />
+      <Stack.Screen
+        name="survey"
+        options={{
+          headerBackTitle: "home",
+          headerTitle: "",
+        }}
+      />
     </Stack>
   );
 }
